@@ -22,6 +22,7 @@ int run() {
 
     if (fd == -1) {
         perror("open");
+        return 1;
     }
 
     fds[0].fd = STDIN_FILENO;
@@ -39,6 +40,9 @@ int run() {
             rd = read(STDIN_FILENO, &buff, BUFFSIZE);
 
             current_len = strlen(buff);
+            if (current_len > BUFFSIZE) {
+                return 1;
+            }
 
             if (rd == -1) {
                 perror("read");
